@@ -38,11 +38,12 @@ export class OpenAppModal {
     this.langService.language$.subscribe(() => {
       this.language = this.langService.words;
     });
-    
+
     if (!this.selectedApp?.maximazed) {
       this.dragPosition = this.selectedApp!.lastDragPosition ?? { x: 50, y: 50 };
     }
   }
+  
   minimizeWindow() {
     if (!this.selectedApp) return;
 
@@ -99,6 +100,11 @@ export class OpenAppModal {
     if (file) {
       file.open = false;
       file.fileType === 'file_explorer' ? this.modalService.updateIsExplorerOpen(false) : null
+    }
+
+    if (this.modalService.getIsInternetOpen()) {
+      this.modalService.updateIsInternetOpen(false)
+      this.modalService.removeLink([])
     }
 
     this.app.emit({ appKey: this.appKey, appId: this.selectedApp?.id })

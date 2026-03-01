@@ -4,21 +4,10 @@
            opacity-95
            ">
     <!-- Start -->
-    <div class="relative">
-
-        <!-- Start Menu -->
-        @if (showStartMenu) {
-        <div class="absolute bottom-12 left-0 w-[18rem] sm:w-[22rem] h-[400px]
-            py-1 pl-1 pr-0 shadow-lg rounded-lg z-50 custom_border window_bar no_see custom_start">
-            <start-content></start-content>
-        </div>
-        }
-
-        <div class="w-10 h-10 flex items-center justify-center rounded-full
+    <div class="w-10 h-10 flex items-center justify-center rounded-full
                 hover:brightness-150 transition duration-200 cursor-pointer"
-            [ngClass]="{ 'brightness-150': showStartMenu }" (click)="openStart()">
-            <img src="assets/icons/Start.svg" alt="" class="w-30 h-30">
-        </div>
+        [ngClass]="{ 'brightness-150': showStartMenu }" (click)="openStart($event)">
+        <img src="assets/icons/Start.svg" alt="" class="w-30 h-30">
     </div>
 
     <!-- Separator -->
@@ -93,10 +82,9 @@
                         flex flex-col gap-3 window_bar">
 
                 @for (links of hiddenLinks; track $index) {
-                <div class="w-10 h-10 flex justify-center items-center task_item">
-                    <a [href]="links.link" target="_blank">
-                        <img [src]="links.linkImg" [alt]="links.linkName" class="w-5 h-5">
-                    </a>
+                <div class="w-10 h-10 flex justify-center items-center task_item"
+                    (click)="selectWindow('internet', links.link)">
+                    <img [src]="links.linkImg" [alt]="links.linkName" class="w-5 h-5">
                 </div>
                 }
 
@@ -105,15 +93,14 @@
         </div> }
         <!-- Link Visibili -->
         @for (links of visibleLinks; track $index) {
-        <div class="w-10 h-10 flex justify-center items-center task_item">
-            <a [href]="links.link" target="_blank">
-                <img [src]="links.linkImg" [alt]="links.linkName" class="w-5 h-5">
-            </a>
+        <div class="w-10 h-10 flex justify-center items-center task_item"
+            (click)="selectWindow('internet', links.link)">
+            <img [src]="links.linkImg" [alt]="links.linkName" class="w-5 h-5">
         </div>
         }
 
         <!-- Language -->
-<!--         @if (showLanguage) {
+        <!--         @if (showLanguage) {
         <div class="absolute bottom-full right-0 translate-x-[-4.1rem]
             mb-1 p-2 rounded shadow-xl flex flex-col gap-3 window_bar z_mille">
 
@@ -124,7 +111,7 @@
         </div>
         } -->
         <!-- Language Visibili -->
-   <!--      <div class="w-10 h-10 flex justify-center items-center task_item">
+        <!--      <div class="w-10 h-10 flex justify-center items-center task_item">
             <button (click)="showLanguageOpt()">
                 <span class="text-shadow-sm">{{languageSelected}}</span>
             </button>

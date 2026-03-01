@@ -31,6 +31,7 @@ export class FileExplorerContent {
     this.componentSub = this.modalService.componentFileExpData$
       .subscribe(value => {
         if (!value) return;
+                
         this.selectFolder(undefined, value)
       });
 
@@ -84,8 +85,7 @@ export class FileExplorerContent {
   }
 
   /* Seleziona la folder */
-  selectFolder(selectedFolder?: Folder, openByOutside?: { optName: string, appKey: string }) {
-
+  selectFolder(selectedFolder?: Folder, openByOutside?: { optName: string, appKey: string }) {    
     if (selectedFolder) {
       this.listApps.forEach(folder => folder.isFolderSelected = folder === selectedFolder);
       this.folderSelected = selectedFolder.folderName;

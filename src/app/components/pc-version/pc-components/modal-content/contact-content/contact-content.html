@@ -65,8 +65,8 @@
                 <div class="flex flex-row gap-3 bg-white mt-3">
                     <div class="w-full flex flex-wrap -mx-3">
                         @for (link of links; track $index) {
-                        <div class="w-full sm:w-1/2 px-3 pb-3 custom_hover">
-                            <a [href]="link.actualLink" class="w-full text-inherit">
+                        <div class="w-full sm:w-1/2 px-3 pb-3 custom_hover" >
+                            <div class="w-full text-inherit" (click)="openWebSite(link.actualLink)">
                                 <div class="w-full flex flex-row justify-between p-3 custom_border different_bot">
                                     <div class="flex flex-row gap-2 flex-wrap sm:flex-nowrap min-w-0 justify-center">
                                         <img [src]="link.icon" alt=""
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                         }
                     </div>

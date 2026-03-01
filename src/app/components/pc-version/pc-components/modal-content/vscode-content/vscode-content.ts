@@ -20,10 +20,10 @@ export class VscodeContent {
   /* Variables */
   componentSub!: Subscription;
   fileToOpen!: string;
-  rotateListArrow: boolean = true;
+  rotateListArrow: boolean = false;
   listaProgetti: Projects[] = VSCODE_LISTA_PROGETTI;
   listOpenedProjects: Projects[] = [];
-  selectedWindow!: string;
+  selectedWindow: string = 'AI Implementation';
 
   constructor(private modalService: ModalSevice, private langService: LanguageService) { }
 
@@ -37,6 +37,9 @@ export class VscodeContent {
     this.langService.language$.subscribe(() => {
       this.language = this.langService.words;
     });
+
+
+    this.selectedProject(this.listaProgetti[0])
   }
 
   /* Seleziona progetto e apre finestra */

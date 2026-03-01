@@ -2,6 +2,10 @@ button, div {
     cursor: default;
 }
 
+.start_container{
+    z-index: 999;
+}
+
 .winui-searchbox {
     background: url('/assets/icons/search_blue.png') no-repeat right 8px center;
     background-size: 13px 13px;

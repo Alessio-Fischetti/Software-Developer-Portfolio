@@ -25,3 +25,13 @@ app-windows-bar {
         background: linear-gradient(to top, rgba(193, 220, 252, 0.6666666667), rgba(220, 235, 252, 0.6666666667));
     }
 }
+
+.window_bar {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1333333333) 50px, transparent 80px),
+        linear-gradient(to left, rgba(0, 0, 0, 0.1333333333) 200px, transparent 230px),
+        #a8c0da;
+}
+
+.custom_border {
+    border: 1px solid rgba(0, 0, 0, 0.74);
+}

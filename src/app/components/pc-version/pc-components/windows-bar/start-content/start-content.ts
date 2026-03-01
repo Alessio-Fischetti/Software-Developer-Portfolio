@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { WINDOWS_START_APPS } from '../../../../../mocks/windows-app.mock';
 import { StartApp } from '../../../../interfaces/app-interface';
 import { ModalSevice } from '../../../../../service/modal-service';
@@ -12,6 +12,7 @@ import { LanguageService } from '../../../../../service/language-service';
   styleUrl: './start-content.scss'
 })
 export class StartContent {
+  @Output() isStartOpen = new EventEmitter<boolean>();
   language: any;
   appList: StartApp[] = WINDOWS_START_APPS;
   fileSelected: string | undefined;
@@ -53,16 +54,26 @@ export class StartContent {
       case 'images':
         this.modalService.sendComponentImage(app)
         break;
+      case 'internet':
+        this.modalService.updateIsInternetOpen(true)
+        break;
     }
+
+    this.isStartOpen.emit(false)
   }
 
   /* Apre fileExp con appropriata view */
-  openExplorer(opt: { optName: string, appKey: string }) {
+  openExplorer(opt: { optName: string, appKey: string, cambiaScheda?: boolean }) {
     let isOpen = this.modalService.checkIsExplorerOpen();
 
     if (!isOpen) {
       this.modalService.sendComponentFileExpData(opt);
+    } else {
+      opt.cambiaScheda = true;
+      this.modalService.sendComponentFileExpData(opt);
     }
+    this.isStartOpen.emit(false)
   }
+
 }
 

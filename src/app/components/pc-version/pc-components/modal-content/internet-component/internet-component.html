@@ -1,0 +1,130 @@
+<div class="w-full h-full">
+    <div class="w-full h-full flex flex-col overflow-hidden">
+
+        <!-- Barra di ricerca -->
+        <div class="p-2 flex flex-row items-center justify-between gap-2 shadow-sm">
+            <!-- LEFT BAR -->
+            <div class="flex justify-start items-center arrows_holder">
+                <button>
+                    <img src="assets/icons/arrow_left.png" alt="" class="w-8 h-7">
+                </button>
+                <button>
+                    <img src="assets/icons/arrow_right.png" alt="" class="w-8 h-7 mt-[2px]">
+                </button>
+            </div>
+            <!-- RIGHT BAR -->
+            <div class="w-full">
+                <input type="search" placeholder="Cerca..." class="
+                            winui-searchbox 
+                            w-full placeholder:italic
+                            placeholder:text-sm
+                            placeholder:text-gray-400 pl-1
+                            outline-none text-xs
+                            pr-8 py-1" [value]=" tabSelected !== 'Internet' ? tabSelected : 'https://Internet.com'" />
+            </div>
+        </div>
+
+        <div
+            class="h-[35px] flex flex-row items-center overflow-x-auto overflow-y-hidden file_exp_bar min-h-[35px] overflow-y-auto">
+
+            <!-- Internet -->
+            <div class="min-w-[10.5rem] flex items-center
+             border-r border-t border-b-0 border-[#b1b1b1] shadow-sm custom_tab"
+                [ngClass]="{' focus': tabSelected === 'Internet', 'border-b-1': tabSelected === 'Internet'}">
+                <div class="w-full h-full p-2 flex items-center gap-2" (click)="switchTab('Internet')">
+                    <img src="assets/icons/internet.webp" alt="" class="w-4 h-4" />
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <span class="font-light text-sm whitespace-pre-line truncate ">
+                            İnternet
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista schede -->
+            @for (tab of tabList; track $index) {
+            <div class="min-w-[10.5rem] flex items-center
+             border-r border-t border-b-0 border-[#b1b1b1] shadow-sm custom_tab"
+                [ngClass]="{' focus': tabSelected === tab, 'border-b-1': tabSelected === tab}">
+                <div class="w-full h-full p-2 flex items-center gap-2" (click)="switchTab(tab)">
+                    <img [src]="tab.includes('linkedin') ?
+                        'assets/icons/linkedin.svg' : tab.includes('github') ? 'assets/icons/github.svg' :
+                       tab.includes('medium') ? 'assets/icons/medium.svg' : 'assets/icons/internet.webp' " alt=""
+                        class="w-4 h-4" />
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <span class="font-light text-sm whitespace-pre-line truncate ">
+                            {{tab.includes('linkedin') ?
+                            'LinkedIn' : tab.includes('github') ? 'GitHub' : tab.includes('medium') ? 'Medium' :
+                            'Internet'}}
+                        </span>
+                    </div>
+                </div>
+                <div class="py-2 mr-2">
+                    <button (click)="closeTab(tab)">
+                        <span class="text-lg px-[10px] pb-[3px] m-0 border-1 border-[#00000000]
+                                rounded-lg hover:border-[#b1b1b1]
+                                hover:bg-[#b1b1b11c]">
+                            x
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+            }
+            @if (tabList && tabList.length < 3) { <div class="w-8 h-8 flex items-center justify-center self-end bg-[#ffffff85]
+                rounded-tr border-1 border-[#b1b1b1] hover:bg-[#b5d8ff94]
+                 text-transparent hover:text-black" (click)="addTab()">
+                <span class="text-lg mb-1">
+                    +
+                </span>
+        </div>
+        }
+
+    </div>
+
+    <div class="w-[100%] h-[100%] border-t-2 border-[#b1b1b1] bg-[#f7fbff]">
+        @if (tabSelected!.includes('linkedin')) {
+        <div class="w-full h-full bg-[#f4f2ee]">
+            <linkedin-page></linkedin-page>
+        </div>
+        }@else if(tabSelected!.includes('github')){
+        <div class="w-full h-[100%]">
+            <github-page></github-page>
+        </div>
+        }@else if(tabSelected!.includes('medium')){
+        <div class="w-full h-[100%]">
+            <div class="w-full h-[100%]">
+                <medium-page></medium-page>
+            </div>
+        </div>
+        }@else if(tabSelected === 'Internet'){
+        <div class="h-full flex flex-col items-center justify-between p-[5rem]">
+            <div class="w-[30%] min-w-[13rem]">
+                <input type="search" placeholder="Cerca..." class="
+                            winui-searchbox 
+                            w-full placeholder:italic
+                            placeholder:text-sm
+                            placeholder:text-gray-400 pl-1
+                            outline-none text-xs
+                            pr-8 py-1" />
+            </div>
+            <div class="flex flex-col gap-4">
+                <span class="text-[1.3rem] self-center">Frequently visited:</span>
+                <div class="flex flex-row gap-4">
+                    @for (link of links; track $index) {
+                    @if (link.linkType !== 'Portfolio') {
+                    <div class="flex flex-col gap-1 px-8 py-4 rounded border-1
+                     border-transparent hover:border-[#b1b1b1] shadow-sm bg-white" (click)="openTab(link.actualLink)">
+                        <img [src]="link.icon" alt="" class="w-14 h-14">
+                        <span>{{link.linkType}}</span>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+            <div></div>
+        </div>
+        }
+    </div>
+</div>
+</div>

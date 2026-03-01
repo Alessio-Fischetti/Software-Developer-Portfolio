@@ -4,7 +4,8 @@ export interface AppModalInterface {
     name: string,
     image: string,
     modalTitle?: string,
-    file?: any
+    file?: any,
+    linksSelected?: string[]
 }
 
 export interface WindowState {

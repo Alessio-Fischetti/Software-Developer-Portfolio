@@ -2,20 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ModalSevice } from '../../../../service/modal-service';
-import { StartContent } from "./start-content/start-content";
 import { LanguageService } from '../../../../service/language-service';
 
 @Component({
   selector: 'app-windows-bar',
-  imports: [CommonModule, StartContent],
+  imports: [CommonModule],
   templateUrl: './windows-bar.html',
   styleUrl: './windows-bar.scss'
 })
 export class WindowsBar {
   @Input() windowsApps: any;
   @Input() newApps: any[] = []
+  @Input() showStartMenu!: boolean;
   @Output() windowSelected = new EventEmitter<string>();
-  /* Variables */
+  @Output() showStartMenuChange = new EventEmitter<boolean>();
   currentHour: Date = new Date()
   interval!: any;
   shrinkRightCorner!: number;
@@ -28,8 +28,6 @@ export class WindowsBar {
   showLanguage: boolean = false;
   languageSelected: string = 'ITA';
   otherLanguage: string = 'ENG';
-  showStartMenu: boolean = false;
-
 
   /* Update link visibili o meno */
   get visibleLinks() {
@@ -68,11 +66,31 @@ export class WindowsBar {
   }
 
   /* Seleziona la finestra */
-  selectWindow(appKey: string) {
+  selectWindow(appKey: string, link?: string) {
     const app = this.windowsApps[appKey];
     if (!app) return;
 
-    this.windowSelected.emit(appKey);
+    if (app.appInfo.name === 'file_explorer') {
+      this.modalService.updateIsExplorerOpen(true)
+    }
+
+    /* Verifica se si vuole aprire i link*/
+    if (!link) {
+      this.windowSelected.emit(appKey);
+      return;
+    }
+    /* Se internet non aperto crea la finestra */
+    if (!this.modalService.getIsInternetOpen()) {
+
+      this.modalService.sendComponentInternetData({ link: link, appKey: 'internet' });
+      return;
+    }
+    /* Altrimenti aggiunge solo links tranne quello gia presente */
+    const linkExists = this.modalService.getListLinks().includes(link);
+
+    if (!linkExists) {
+      this.modalService.sendComponentInternetData({ link: link, appKey: 'internet' })
+    }
   }
 
   /* Nasconde links */
@@ -112,9 +130,12 @@ export class WindowsBar {
   }
 
   /* Apre start */
-  openStart() {
+  openStart(event: MouseEvent) {
+    event.stopPropagation();
     this.showStartMenu = !this.showStartMenu;
+    this.showStartMenuChange.emit(this.showStartMenu)
   }
+
 
   ngOnDestroy() {
     clearInterval(this.interval);

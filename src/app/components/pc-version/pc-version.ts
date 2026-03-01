@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { WindowsBar } from './pc-components/windows-bar/windows-bar';
 import { CommonModule } from '@angular/common';
 import { OpenAppModal } from "./pc-components/open-app-modal/open-app-modal";
@@ -7,10 +7,11 @@ import { WINDOWS_APPS_CONTENT, WINDOWS_APPS_MOCK } from '../../mocks/windows-app
 import { AppItem, Folder } from '../interfaces/app-interface';
 import { ModalSevice } from '../../service/modal-service';
 import { Subscription } from 'rxjs';
+import { StartContent } from "./pc-components/windows-bar/start-content/start-content";
 
 @Component({
   selector: 'app-pc-version',
-  imports: [CommonModule, WindowsBar, OpenAppModal],
+  imports: [CommonModule, WindowsBar, OpenAppModal, StartContent],
   templateUrl: './pc-version.html',
   styleUrl: './pc-version.scss'
 })
@@ -20,21 +21,42 @@ export class PcVersion {
   openedWindows: { appName: string, appId: number }[] = [
     { appName: 'cmd', appId: 1 }
   ];
+  showStartMenu: boolean = false;
   highestZIndex = 1
   listApps: Folder[] = WINDOWS_APPS_CONTENT;
   fileSelected: string | undefined;
   newApps: any[] = [];
-  componentSub!: Subscription;
-
+  fileExpSub!: Subscription;
+  internetSub!: Subscription;
 
   constructor(private modalService: ModalSevice) { }
 
+  @ViewChild('startMenu') startMenu!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+
+    if (!this.showStartMenu) return;
+
+    if (!this.startMenu?.nativeElement.contains(event.target)) {
+      this.manageStartMenu(false)
+    }
+  }
+
   ngOnInit() {
-    this.componentSub = this.modalService.componentFileExpData$
+    this.fileExpSub = this.modalService.componentFileExpData$
       .subscribe(value => {
         if (!value) return;
+        if (this.modalService.checkIsExplorerOpen()) return;
         this.selectWindow(value.appKey)
       });
+    this.internetSub = this.modalService.componentInternetData$.subscribe(
+      value => {
+        if (!value) return;
+        if (this.modalService.getIsInternetOpen()) return;
+        this.selectWindow(value.appKey)
+      }
+    )
   }
 
   /* Recupera la view selezionata */
@@ -109,7 +131,6 @@ export class PcVersion {
         if (app.appInfo.name != 'file_explorer' && app.appInfo.name != 'cmd') {
           this.newApps.push(app)
         }
-
         this.openSelectedWindow(appKey, app);
       }
 
@@ -167,6 +188,11 @@ export class PcVersion {
     this.highestZIndex++;
     app.zIndex = this.highestZIndex;
     app.isSelected = true;
+  }
+
+  /* Gestisce apertura e chiusura start menu */
+  manageStartMenu(status: boolean) {
+    this.showStartMenu = status
   }
 
   /* Gestione chiusura */

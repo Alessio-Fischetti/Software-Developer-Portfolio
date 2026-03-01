@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WindowsApps, WindowState } from '../components/interfaces/modal-interface';
 import { WINDOWS_APPS_MOCK } from '../mocks/windows-app.mock';
@@ -73,6 +73,49 @@ export class ModalSevice {
     }
 
     updateIsExplorerOpen(opt: boolean) {
-        this.isExplorerOpen = false;
+        this.isExplorerOpen = opt;
+    }
+
+    /* Internet */
+
+    private componentInternet = new BehaviorSubject<{ link: string, appKey: string } | null>(null);
+    componentInternetData$ = this.componentInternet.asObservable();
+    private isInternetOpen = false;
+    private listLinks: string[] = []
+
+    sendComponentInternetData(value: { link: string, appKey: string }) {
+        if (value) {
+            this.updateListLinks(value.link)
+            this.componentInternet.next(value);
+            this.isInternetOpen = true
+        }
+    }
+
+    getListLinks() {
+        return this.listLinks;
+    }
+
+    updateListLinks(link: string) {
+        this.listLinks.push(link)
+    }
+
+    removeLink(link: string | string[]) {
+        if (typeof link === 'string') {
+            this.listLinks = this.listLinks.filter(l => l !== link)
+        } else {
+            this.listLinks = link
+        }
+    }
+
+    getIsInternetOpen() {
+        return this.isInternetOpen;
+    }
+
+    updateIsInternetOpen(opt: boolean) {
+        this.isInternetOpen = opt;
+    }
+
+    clearInternetState() {
+        this.componentInternet.next(null);
     }
 }

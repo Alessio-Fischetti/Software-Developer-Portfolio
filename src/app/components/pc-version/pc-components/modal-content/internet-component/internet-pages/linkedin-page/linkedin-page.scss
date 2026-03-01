@@ -1,0 +1,26 @@
+.linkedin_input {
+    width: 20%;
+    min-width: 8rem;
+    border: 1px solid #b1b1b1;
+    border-radius: 5rem;
+    padding: 0.3rem 0.5rem 0.3rem 28px;
+    background: url('/assets/icons/search_black.png') no-repeat left 8px center;
+    background-size: 13px 13px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.linkedin_input:focus {
+    border-color: #000;
+}
+
+p {
+    margin: 0 10px;
+}
+
+.linkedin_avatar {
+    background-image: url('/assets/imgs/me.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

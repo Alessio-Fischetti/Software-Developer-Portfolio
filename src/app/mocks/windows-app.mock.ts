@@ -7,6 +7,7 @@ import { VscodeContent } from "../components/pc-version/pc-components/modal-cont
 import { ContactContent } from "../components/pc-version/pc-components/modal-content/contact-content/contact-content";
 import { ImageContent } from "../components/pc-version/pc-components/modal-content/image-content/image-content";
 import { AboutMeContent } from "../components/pc-version/pc-components/modal-content/about-me-content/about-me-content";
+import { InternetComponent } from "../components/pc-version/pc-components/modal-content/internet-component/internet-component";
 
 export const WINDOWS_APPS_MOCK: WindowsApps = {
     windows_icon: {
@@ -46,10 +47,10 @@ export const WINDOWS_APPS_MOCK: WindowsApps = {
         onBackground: false,
         dragPosition: { x: 50, y: 50 },
         lastDragPosition: { x: 50, y: 50 },
-        xSize: '50%',
-        lastXSize: '50%',
-        ySize: '50%',
-        lastYSize: '50%',
+        xSize: '90%',
+        lastXSize: '90%',
+        ySize: '80%',
+        lastYSize: '80%',
         appInfo: { image: 'assets/icons/File_Explorer.svg', name: 'file_explorer', modalTitle: 'File Explorer' },
         component: FileExplorerContent
     },
@@ -76,8 +77,8 @@ export const WINDOWS_APPS_MOCK: WindowsApps = {
         isSelected: false,
         maximazed: false,
         onBackground: false,
-        dragPosition: { x: 120, y: 100 },
-        lastDragPosition: { x: 120, y: 100 },
+        dragPosition: { x: 90, y: 100 },
+        lastDragPosition: { x: 90, y: 100 },
         xSize: '90%',
         lastXSize: '90%',
         ySize: '80%',
@@ -92,12 +93,12 @@ export const WINDOWS_APPS_MOCK: WindowsApps = {
         isSelected: false,
         maximazed: false,
         onBackground: false,
-        dragPosition: { x: 180, y: 100 },
-        lastDragPosition: { x: 180, y: 100 },
-        xSize: '70%',
-        lastXSize: '70%',
-        ySize: '50%',
-        lastYSize: '50%',
+        dragPosition: { x: 10, y: 100 },
+        lastDragPosition: { x: 10, y: 100 },
+        xSize: '90%',
+        lastXSize: '90%',
+        ySize: '80%',
+        lastYSize: '80%',
         appInfo: { image: 'assets/icons/vscode.svg', name: 'vscode', modalTitle: 'Vs Code' },
         component: VscodeContent
     },
@@ -108,12 +109,12 @@ export const WINDOWS_APPS_MOCK: WindowsApps = {
         isSelected: false,
         maximazed: false,
         onBackground: false,
-        dragPosition: { x: 200, y: 50 },
-        lastDragPosition: { x: 200, y: 50 },
-        xSize: '50%',
-        lastXSize: '50%',
-        ySize: '50%',
-        lastYSize: '50%',
+        dragPosition: { x: 20, y: 50 },
+        lastDragPosition: { x: 20, y: 50 },
+        xSize: '90%',
+        lastXSize: '90%',
+        ySize: '80%',
+        lastYSize: '80%',
         appInfo: { image: 'assets/icons/contact.png', name: 'contact_me', modalTitle: 'Contattami' },
         component: ContactContent
     },
@@ -133,6 +134,22 @@ export const WINDOWS_APPS_MOCK: WindowsApps = {
         appInfo: { image: 'assets/imgs/me.webp', name: 'images', modalTitle: 'About me.png', file: 'assets/imgs/me.webp' },
         component: ImageContent
     },
+    internet: {
+        id: 0,
+        isOpen: false,
+        isMinimized: false,
+        isSelected: false,
+        maximazed: false,
+        onBackground: false,
+        dragPosition: { x: 150, y: 50 },
+        lastDragPosition: { x: 150, y: 50 },
+        xSize: '80%',
+        lastXSize: '80%',
+        ySize: '80%',
+        lastYSize: '80%',
+        appInfo: { image: 'assets/icons/internet.webp', name: 'internet', modalTitle: 'Internet Explorer' },
+        component: InternetComponent
+    }
 
 };
 
@@ -253,6 +270,12 @@ export const WINDOWS_START_APPS: StartApp[] = [
         appName: 'File Explorer',
         appImg: 'assets/icons/File_Explorer.svg',
         fileType: "file_explorer",
+        open: false
+    },
+    {
+        appName: 'Internet',
+        appImg: 'assets/icons/internet.webp',
+        fileType: "internet",
         open: false
     },
     {
