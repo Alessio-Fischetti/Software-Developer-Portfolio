@@ -8,7 +8,7 @@ export const CONTACTS: Contact[] = [
         contactType: 'Email', contactValue: 'afischetti.work@gmail.com', icon: 'assets/icons/email_container.png', copy: true
     },
     {
-        contactType: 'Posizione', contactValue: 'Bologna, Italia, IT', icon: 'assets/icons/location.png', copy: false
+        contactType: 'Posizione', contactValue: 'Monza, Italia, IT', icon: 'assets/icons/location.png', copy: false
     },
 ]
 
